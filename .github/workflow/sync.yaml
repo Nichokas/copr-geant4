@@ -6,24 +6,44 @@ on:
   workflow_dispatch:
 
 jobs:
-  update-spec:
+  check-version:
     runs-on: ubuntu-latest
     steps:
-      - name: Clone our repo
+      - name: Clonar nuestro repositorio
         uses: actions/checkout@v4
 
-      - name: Download CERNs spec
+      - name: Fetch CERNs website
         run: |
-          curl -o geant4.spec https://raw.githubusercontent.com/Geant4/geant4/master/packaging/rpm/geant4.spec
-
-      - name: Check if changed
-        run: |
-          if git diff --quiet; then
-            echo "Up to date."
+          # Chech in CERN's website if there is a new GEANT4 release
+          LATEST_VERSION=$(curl -sL https://geant4.web.cern.ch/download/ | grep -oP "(?<=/download/)[0-9]+\.[0-9]+\.[0-9]+(?=\.html)")
+          
+          if [ -z "$LATEST_VERSION" ]; then
+            echo "Error: Couldn't extract current version."
+            exit 1
+          fi
+          echo "The latest version on web is: $LATEST_VERSION"
+          
+          if [ -f "version.txt" ]; then
+            CURRENT_VERSION=$(cat version.txt)
           else
+            CURRENT_VERSION="0.0.0"
+          fi
+          echo "Nuestra versión actual compilada es: $CURRENT_VERSION"
+          
+          if [ "$LATEST_VERSION" != "$CURRENT_VERSION" ]; then
+            echo "There is a newer release ($LATEST_VERSION)!"
+            
+            echo "$LATEST_VERSION" > version.txt
+            
+            curl -o geant4.spec https://raw.githubusercontent.com/Geant4/geant4/master/packaging/rpm/geant4.spec
+            
             git config user.name "github-actions[bot]"
             git config user.email "github-actions[bot]@users.noreply.github.com"
-            git add geant4.spec
-            git commit -m "Auto-update: new upstream version of geant4.spec"
+            git add version.txt geant4.spec
+            git commit -m "Upstream update to $LATEST_VERSION"
             git push
+            
+            echo "Commited. Waiting for COPR..."
+          else
+            echo "Up to date"
           fi
