@@ -78,7 +78,7 @@ BuildRequires: SoQt-devel
 %endif
 
 %if %{with qt5}
-BuildRequires: qt5-qtbase-devel
+BuildRequires: qt6-qtbase-devel qt6-qt3d-devel
 %endif
 
 %if %{with tbb}
@@ -136,7 +136,7 @@ Requires: SoQt-devel
 %endif
 
 %if %{with qt5}
-Requires: qt5-qtbase-devel
+Requires: qt6-qtbase-devel qt6-qt3d-devel
 %endif
 
 %if %{with tbb}
@@ -194,7 +194,7 @@ Geant4 user examples
   -DGEANT4_USE_INVENTOR:BOOL=OFF \
   -DGEANT4_USE_INVENTOR_QT:BOOL=%{with inventor} \
   -DGEANT4_USE_OPENGL_X11:BOOL=ON \
-  -DGEANT4_USE_QT:BOOL=%{with qt5} -DGEANT4_USE_QT_QT6:BOOL=OFF \
+  -DGEANT4_USE_QT:BOOL=%{with qt5} \
   -DGEANT4_USE_RAYTRACER_X11:BOOL=ON \
   -DGEANT4_USE_SMARTSTACK:BOOL=OFF \
   -DGEANT4_USE_SYSTEM_CLHEP:BOOL=OFF \
