@@ -43,6 +43,9 @@ jobs:
             git commit -m "Upstream update to $LATEST_VERSION"
             git push
             
+            echo "Pinging COPR..."
+            curl -X POST "https://copr.fedorainfracloud.org/webhooks/custom/225596/c67cb9f3-feae-4acb-adf2-7d0f3e016985/geant4/"
+
             echo "Commited. Waiting for COPR..."
           else
             echo "Up to date"
