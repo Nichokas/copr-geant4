@@ -50,8 +50,8 @@ Source15: https://geant4-data.web.cern.ch/datasets/%{URRPTDATA}.tar.gz
 
 %if %{?rhel}%{!?rhel:9} >= 9
 %bcond_without tbb
-%bcond hdf5 %{without threads}
-%bcond inventor %[%{?fedora:1}%{!?fedora:0}]
+%bcond_without hdf5
+%bcond_with inventor
 %endif
 
 %if %{?rhel}%{!?rhel:0} == 7
