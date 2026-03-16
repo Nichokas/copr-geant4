@@ -16,6 +16,9 @@ jobs:
         run: |
           # Chech in CERN's website if there is a new GEANT4 release
           LATEST_VERSION=$(curl -sL https://geant4.web.cern.ch/download/ | grep -oP "(?<=/download/)[0-9]+\.[0-9]+\.[0-9]+(?=\.html)")
+
+          sed -i 's/%bcond hdf5 .*/%bcond_without hdf5/' geant4.spec
+          sed -i 's/%bcond inventor .*/%bcond_with inventor/' geant4.spec
           
           if [ -z "$LATEST_VERSION" ]; then
             echo "Error: Couldn't extract current version."
