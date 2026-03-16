@@ -50,7 +50,7 @@ Source15: https://geant4-data.web.cern.ch/datasets/%{URRPTDATA}.tar.gz
 
 %if %{?rhel}%{!?rhel:9} >= 9
 %bcond_without tbb
-%bcond_without hdf5
+%bcond_with hdf5
 %bcond_with inventor
 %endif
 
@@ -305,7 +305,7 @@ tar xzf %{SOURCE15} -C %{buildroot}/%{_datadir}/%{name}/data
 * Fri Feb 16 2024 Gabriele Cosmo <Gabriele.Cosmo@cern.ch> - 11.2.1
 - Update to version 11.2.1
 
-* Wed Dec 12 2023 Guilherme Amadio <amadio@cern.ch> - 11.2.0
+* Tue Dec 12 2023 Guilherme Amadio <amadio@cern.ch> - 11.2.0
 - Update to version 11.2.0
 
 * Wed Jun 28 2023 Guilherme Amadio <amadio@cern.ch> - 11.1.2
