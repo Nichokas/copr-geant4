@@ -44,7 +44,7 @@ jobs:
             sed -i 's/Fri June 7/Fri Jun 07/g' geant4.spec
             sed -i 's/Wed Dec 12/Tue Dec 12/g' geant4.spec
             # Fix qt version mismatch
-            sed -i 's/-DGEANT4_USE_QT:BOOL=%{with qt5}/-DGEANT4_USE_QT:BOOL=%{with qt5} -DGEANT4_USE_QT_QT6:BOOL=OFF/g' geant4.spec
+            sed -i 's/qt5-qtbase-devel/qt6-qtbase-devel qt6-qt3d-devel/g' geant4.spec
             
             git config user.name "github-actions[bot]"
             git config user.email "github-actions[bot]@users.noreply.github.com"
