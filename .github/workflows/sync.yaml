@@ -40,6 +40,8 @@ jobs:
             # Fix beta syntax
             sed -i 's/%bcond hdf5 .*/%bcond_without hdf5/' geant4.spec
             sed -i 's/%bcond inventor .*/%bcond_with inventor/' geant4.spec
+            # Fix current date
+            sed -i 's/Fri June 7/Fri Jun 07/g' geant4.spec
             
             git config user.name "github-actions[bot]"
             git config user.email "github-actions[bot]@users.noreply.github.com"
