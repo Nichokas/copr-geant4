@@ -45,6 +45,11 @@ jobs:
             sed -i 's/Wed Dec 12/Tue Dec 12/g' geant4.spec
             # Fix qt version mismatch
             sed -i 's/qt5-qtbase-devel/qt6-qtbase-devel qt6-qt3d-devel/g' geant4.spec
+            # Remove cmake3 (deprecated)
+            sed -i 's/%cmake3_build/%cmake_build/g' geant4.spec
+            sed -i 's/%cmake3_install/%cmake_install/g' geant4.spec
+            sed -i 's/%cmake3 /%cmake /g' geant4.spec
+            sed -i 's/__cmake3_/__cmake_/g' geant4.spec
             
             git config user.name "github-actions[bot]"
             git config user.email "github-actions[bot]@users.noreply.github.com"
