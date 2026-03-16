@@ -40,7 +40,7 @@ Source14: https://geant4-data.web.cern.ch/datasets/%{NUDEXLIBDATA}.tar.gz
 Source15: https://geant4-data.web.cern.ch/datasets/%{URRPTDATA}.tar.gz
 
 %undefine __cmake_in_source_build
-%undefine __cmake3_in_source_build
+%undefine __cmake_in_source_build
 
 %bcond_with vtk
 %bcond_without examples
@@ -175,7 +175,7 @@ Geant4 user examples
 . /opt/rh/devtoolset-7/enable
 %endif
 
-%cmake3 \
+%cmake \
   -DCMAKE_INSTALL_PREFIX:PATH=%{_prefix} \
   -DCMAKE_INSTALL_DATADIR:PATH=%{_datadir}/%{name} \
   -DGEANT4_BUILD_BUILTIN_BACKTRACE:BOOL=OFF \
@@ -205,13 +205,13 @@ Geant4 user examples
   -DGEANT4_USE_VTK:BOOL=%{with vtk} \
   -DGEANT4_USE_XM:BOOL=ON
 
-%cmake3_build
+%cmake_build
 
 %install
 %if %{?rhel}%{!?rhel:0} == 7
 . /opt/rh/devtoolset-7/enable
 %endif
-%cmake3_install
+%cmake_install
 rm -f %{buildroot}/%{_bindir}/geant4.sh
 rm -f %{buildroot}/%{_bindir}/geant4.csh
 
