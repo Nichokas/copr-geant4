@@ -296,7 +296,7 @@ tar xzf %{SOURCE15} -C %{buildroot}/%{_datadir}/%{name}/data
 * Fri Jun 21 2024 Gabriele Cosmo <Gabriele.Cosmo@cern.ch> - 11.2.2
 - Update to version 11.2.2
 
-* Fri June 7 2024 Ben Morgan <bmorgan@cern.ch> - 11.2.1-2
+* Fri Jun 07 2024 Ben Morgan <bmorgan@cern.ch> - 11.2.1-2
 - Add install of new URRPT dataset
 
 * Fri May 17 2024 Ben Morgan <bmorgan@cern.ch> - 11.2.1-1
