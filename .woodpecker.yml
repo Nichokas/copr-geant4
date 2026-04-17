@@ -1,0 +1,51 @@
+when:
+  - event: cron
+  - event: manual
+ 
+steps:
+  sync:
+    image: alpine:3.20
+    environment:
+      CODEBERG_TOKEN:
+        from_secret: codeberg_token
+      COPR_WEBHOOK:
+        from_secret: copr_webhook
+    commands:
+      - apk add --no-cache --quiet curl git grep sed
+      - |
+        set -eu
+        LATEST=$(curl -sL https://geant4.web.cern.ch/download/ \
+          | grep -oE '/download/[0-9]+\.[0-9]+\.[0-9]+\.html' \
+          | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -n1)
+        test -n "$LATEST"
+        CURRENT=$(cat upstream.version 2>/dev/null || echo 0.0.0)
+        echo "upstream=$LATEST  current=$CURRENT"
+        if [ "$LATEST" = "$CURRENT" ]; then
+          echo "Up to date, exiting."
+          exit 0
+        fi
+ 
+        echo "$LATEST" > upstream.version
+        curl -fsSL -o geant4.spec \
+          https://raw.githubusercontent.com/Geant4/geant4/master/packaging/rpm/geant4.spec
+        sed -i \
+          -e 's/%bcond hdf5 .*/%bcond_with hdf5/' \
+          -e 's/%bcond inventor .*/%bcond_with inventor/' \
+          -e 's/Fri June 7/Fri Jun 07/g' \
+          -e 's/Wed Dec 12/Tue Dec 12/g' \
+          -e 's/qt5-qtbase-devel/qt6-qtbase-devel qt6-qt3d-devel/g' \
+          -e 's/%cmake3_build/%cmake_build/g' \
+          -e 's/%cmake3_install/%cmake_install/g' \
+          -e 's/%cmake3 /%cmake /g' \
+          -e 's/__cmake3_/__cmake_/g' \
+          geant4.spec
+ 
+        git config user.name  "copr-geant4 bot"
+        git config user.email "bot@users.noreply.codeberg.org"
+        git add upstream.version geant4.spec
+        git commit -m "Upstream update to $LATEST"
+        git remote set-url origin \
+          "https://ci:${CODEBERG_TOKEN}@codeberg.org/Nichokas/copr-geant4.git"
+        git push origin HEAD:main
+ 
+        curl -fsS -X POST "$COPR_WEBHOOK"
