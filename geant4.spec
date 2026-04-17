@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2026 Nicolás Rodríguez Álvarez
+#
+# SPDX-License-Identifier: MIT
+
 %global geant4_version 11.4.1
 
 %global NEUTRONHPDATA G4NDL.4.7.1
