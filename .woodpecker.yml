@@ -31,11 +31,16 @@ steps:
  
         echo "$LATEST" > upstream.version
         curl -fsSL -o geant4.spec \
-          https://raw.githubusercontent.com/Geant4/geant4/master/packaging/rpm/geant4.spec
+          "https://raw.githubusercontent.com/Geant4/geant4/v${LATEST}/packaging/rpm/geant4.spec"
+        # release tags keep qt6/cmake fixes (master carries them for the beta);
+        # local-only toggles stay here + SPDX header for REUSE compliance
         sed -i \
           -e 's/%bcond hdf5 .*/%bcond_with hdf5/' \
           -e 's/%bcond inventor .*/%bcond_with inventor/' \
+          -e '1i # SPDX-FileCopyrightText: 2026 Nicolás Rodríguez Álvarez\n#\n# SPDX-License-Identifier: MIT\n' \
           geant4.spec
+        # reject beta/rc strings from master bleeding in (rpm forbids '-' in Version)
+        ! grep -qE '^%global geant4_version .*[-~]' geant4.spec
  
         git config user.name  "copr-geant4 bot"
         git config user.email "bot@users.noreply.codeberg.org"
