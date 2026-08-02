@@ -35,13 +35,6 @@ steps:
         sed -i \
           -e 's/%bcond hdf5 .*/%bcond_with hdf5/' \
           -e 's/%bcond inventor .*/%bcond_with inventor/' \
-          -e 's/Fri June 7/Fri Jun 07/g' \
-          -e 's/Wed Dec 12/Tue Dec 12/g' \
-          -e 's/qt5-qtbase-devel/qt6-qtbase-devel qt6-qt3d-devel/g' \
-          -e 's/%cmake3_build/%cmake_build/g' \
-          -e 's/%cmake3_install/%cmake_install/g' \
-          -e 's/%cmake3 /%cmake /g' \
-          -e 's/__cmake3_/__cmake_/g' \
           geant4.spec
  
         git config user.name  "copr-geant4 bot"
@@ -52,4 +45,4 @@ steps:
           "https://ci:$${CODEBERG_TOKEN}@codeberg.org/Nichokas/copr-geant4.git"
         git push origin HEAD:main
  
-        curl -fsS -X POST "$COPR_WEBHOOK"
+        curl -fsS -X POST "$${COPR_WEBHOOK}"
