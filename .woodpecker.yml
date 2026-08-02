@@ -49,7 +49,7 @@ steps:
         git add upstream.version geant4.spec
         git commit -m "Upstream update to $LATEST"
         git remote set-url origin \
-          "https://ci:${CODEBERG_TOKEN}@codeberg.org/Nichokas/copr-geant4.git"
+          "https://ci:$${CODEBERG_TOKEN}@codeberg.org/Nichokas/copr-geant4.git"
         git push origin HEAD:main
  
         curl -fsS -X POST "$COPR_WEBHOOK"
