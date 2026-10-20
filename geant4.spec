@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: MIT
 
-%global geant4_version 11.4.2
+%global geant4_version 11.4.3
 
 %global NEUTRONHPDATA G4NDL.4.7.1
 %global LEDATA G4EMLOW.8.8
@@ -265,6 +265,9 @@ tar xzf %{SOURCE15} -C %{buildroot}/%{_datadir}/%{name}/data
 %endif
 
 %changelog
+* Wed Sep 23 2026 Gabriele Cosmo <Gabriele.Cosmo@cern.ch> - 11.4.3
+- Update to version 11.4.3
+
 * Fri Jun 12 2026 Gabriele Cosmo <Gabriele.Cosmo@cern.ch> - 11.4.2
 - Update to version 11.4.2
 
