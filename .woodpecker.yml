@@ -31,7 +31,7 @@ steps:
  
         echo "$LATEST" > upstream.version
         curl -fsSL -o geant4.spec \
-          "https://raw.githubusercontent.com/Geant4/geant4/v${LATEST}/packaging/rpm/geant4.spec"
+          "https://raw.githubusercontent.com/Geant4/geant4/v$${LATEST}/packaging/rpm/geant4.spec"
         # release tags keep qt6/cmake fixes (master carries them for the beta);
         # local-only toggles stay here + SPDX header for REUSE compliance
         sed -i \
